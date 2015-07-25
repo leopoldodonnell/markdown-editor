@@ -22,8 +22,7 @@ A simple markdown editor used to explore Electron, Polymer, npm, bower.
 ```
 3. see if it will run (from the project directory)
 ```bash
-> bower update
-> npm update
+> npm start
 ```
 4. Build it!
 ```bash
@@ -33,4 +32,4 @@ A simple markdown editor used to explore Electron, Polymer, npm, bower.
 
 ## License
 
-MIT
+ See MIT-LICENSE in this Repository
