@@ -31,43 +31,38 @@
 
     var curFile;
 
+    var markDownText;
+
+    // Clear the contents
     ipc.on('new-file', function() {
-      console.log("new-file: ")
+      console.log("new-file: ");
+      markDownText.bindValue = "";
     })
 
-    ipc.on('open-file', function() {
-      var files = dialog.showOpenDialog({
-        title: 'Open Markdown File',
-        properties: [ 'openFile' ],
-        filters: [{name: 'Markdown', extensions: ['md']}]
+    // Open and display the contents of the specified file
+    ipc.on('open-file', function(path) {
+      console.log("CurFile is: " + path);
+      fs.readFile(curFile, {encoding: 'UTF-8'}, function (err, data) {
+        if (err) throw err;
+
+        // Add a file to the most recent documents in the Dock
+        app.addRecentDocument(path);
+
+        markDownText.bindValue = data;
       });
-
-      if(files) {
-        curFile = files[0];
-        console.log("CurFile is: " + curFile);
-        fs.readFile(curFile, {encoding: 'UTF-8'}, function (err, data) {
-          if (err) throw err;
-
-          // Add a file to the most recent documents in the Dock
-          app.addRecentDocument(curFile);
-
-          textArea = document.getElementById('a1');
-          textArea.bindValue = data;
-          console.log(data);
-        });
-      }
     });
 
-    ipc.on('save-file', function(){
-      console.log("save-file: ");
-      if (!curFile) {
-        // Open a Dialog to save the file for the first time
-      }
-
+    // Save the contets of the markdown text to a specified file.
+    ipc.on('save-file', function(path){
+      console.log("save-file: " + path);
+      fs.writeFile(path, markDownText.bindValue, function (err) {
+        if (err) throw err;
+      });
     });
 
     // Page initialization
     (function() {
+      markDownText = document.getElementById('a1');
       document.title = "Markdowner iojs: " + process.version + " Electron: " + process.versions['electron'];
     })();
     </script>

@@ -1,7 +1,25 @@
 # markdown-editor
 A simple markdown editor used to explore Electron, Polymer, npm, bower.
 
-### Pre-requisits
+There is no pretense that this application is awesome or is consitent etc. etc. It was just
+a starting point for me to figure some of the basics out.
+
+## What works and Doesn't
+
+###
+
+1. It builds
+1. Loading a file works. File > Open or 'Command+O'
+1. New kind of works to clear what's there. File > New
+1. Save doesn't really work - got to build a save dialg.
+1. toggleDevTools and Reload work.
+1. Added a menu to the Dock
+1. Using the OSX Dock to load previously visited files also works
+1. Some extremely simple and rough Polymer code.
+1. Layout is poor and there's some bleeding on the bottom of the AutoGrow Text.
+1. Ux is aweful.
+
+## Pre-requisits
 
 * node
 * npm

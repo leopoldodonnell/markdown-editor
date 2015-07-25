@@ -19,6 +19,11 @@ app.on('window-all-closed', function() {
   }
 });
 
+app.on('open-file', function(event, path) {
+  event.preventDefault();
+  mainWindow.send('open-file', path);
+});
+
 function setApplicationMenu() {
   var template = [
     {
@@ -73,12 +78,28 @@ function setApplicationMenu() {
         {
           label: 'Open',
           accelerator: 'Command+O',
-          click: function() { mainWindow.send('open-file'); }
+          click: function() {
+            var files = dialog.showOpenDialog({
+              title: 'Open Markdown File',
+              properties: [ 'openFile' ],
+              filters: [{name: 'Markdown', extensions: ['md']}]
+            });
+
+            if(files) {
+              mainWindow.send('open-file', files[0]);
+            }
+          }
         },
         {
           label: 'Save',
           accelerator: 'Command+S',
-          click: function() { mainWindow.send('save-file'); }
+          click: function() {
+            var files = dialog.showOpenDialog({
+              title: 'Save Markdown File',
+              properties: [ 'save-file' ],
+              filters: [{name: 'Markdown', extensions: ['md']}]
+            });
+            if (files) mainWindow.send('save-file', files[0]); }
         },
         {
           label: 'Quit',
@@ -183,9 +204,6 @@ app.on('ready', function() {
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-  // Open the devtools.
-  mainWindow.openDevTools();
-
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows
@@ -193,9 +211,6 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-
-  // Add a file to the most recent documents in the Dock
-  app.addRecentDocument('/Users/leo_odonnell/Dropbox/dev/electron/my-first-app/package.json');
 
   // Add a Menu to the Dock
   var Menu = require('menu');
