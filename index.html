@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Markdowner</title>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link   rel="import" href="bower_components/marked-element/marked-element.html">
+    <link   rel="import" href="bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+
+    <style>
+      iron-autogrow-textarea {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="filename"></h1>
+    <template is="dom-bind">
+      <div class="vertical-section">
+        <iron-autogrow-textarea bind-value="{{bindValue}}" id="a1" rows=10 max-rows=25></iron-autogrow-textarea>
+        <br><br>
+        <marked-element markdown="[[bindValue]]"></marked-element>
+      </div>
+    </template>
+
+    <script type="text/javascript">
+    var remote  = require('remote');
+    var dialog  = remote.require('dialog');
+    var app     = remote.require('app');
+    var ipc     = require('ipc');
+    var fs      = require('fs');
+
+    var curFile;
+
+    ipc.on('new-file', function() {
+      console.log("new-file: ")
+    })
+
+    ipc.on('open-file', function() {
+      var files = dialog.showOpenDialog({
+        title: 'Open Markdown File',
+        properties: [ 'openFile' ],
+        filters: [{name: 'Markdown', extensions: ['md']}]
+      });
+
+      if(files) {
+        curFile = files[0];
+        console.log("CurFile is: " + curFile);
+        fs.readFile(curFile, {encoding: 'UTF-8'}, function (err, data) {
+          if (err) throw err;
+
+          // Add a file to the most recent documents in the Dock
+          app.addRecentDocument(curFile);
+
+          textArea = document.getElementById('a1');
+          textArea.bindValue = data;
+          console.log(data);
+        });
+      }
+    });
+
+    ipc.on('save-file', function(){
+      console.log("save-file: ");
+      if (!curFile) {
+        // Open a Dialog to save the file for the first time
+      }
+
+    });
+
+    // Page initialization
+    (function() {
+      document.title = "Markdowner iojs: " + process.version + " Electron: " + process.versions['electron'];
+    })();
+    </script>
+  </body>
+</html>

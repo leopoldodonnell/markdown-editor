@@ -1,0 +1,24 @@
+{
+  "name": "my-first-app",
+  "version": "0.0.0",
+  "authors": [
+    "Leo O'Donnell <leopold.odonnell@gmail.com>"
+  ],
+  "description": "First Demonstration App with Electron and Polymer",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "marked-element": "PolymerElements/marked-element#~1.0.2",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#~1.0.3"
+  }
+}
