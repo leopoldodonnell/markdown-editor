@@ -4,14 +4,11 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-osx": "electron-packager ./ my-first-app --platform=darwin --arch=x64 --version=0.29.1 --overwrite --asar",
-    "build-win": "electron-packager ./ my-first-app --platform=win32  --arch=x64 --version=0.29.1 --overwrite --asar"
-  },
-  "devDependancies": {
-    "electron-packager": "^5.0.0",
-    "electron-prebuilt": "^0.25.0"
+    "build-osx": "electron-packager ./ markdown-editor --platform=darwin --arch=x64 --version=0.29.1 --overwrite --asar",
+    "build-win": "electron-packager ./ markdown-editor --platform=win32  --arch=x64 --version=0.29.1 --overwrite --asar"
   },
   "devDependencies": {
-    "native-module": "^0.11.3"
+    "electron-packager": "^5.0.1",
+    "electron-prebuilt": "^0.30.1"
   }
 }

@@ -69,8 +69,8 @@ Visit the appropriate web sites to install:
 ```
 4. Build it!
 ```bash
-> npm build-osx
-> npm build-win
+> npm run build-osx
+> npm run build-win
 ```
 
 ## License
