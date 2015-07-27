@@ -94,12 +94,11 @@ function setApplicationMenu() {
           label: 'Save',
           accelerator: 'Command+S',
           click: function() {
-            var files = dialog.showOpenDialog({
+            var file = dialog.showSaveDialog({
               title: 'Save Markdown File',
-              properties: [ 'save-file' ],
               filters: [{name: 'Markdown', extensions: ['md']}]
             });
-            if (files) mainWindow.send('save-file', files[0]); }
+            if (file) mainWindow.send('save-file', file); }
         },
         {
           label: 'Quit',
